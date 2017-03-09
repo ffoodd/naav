@@ -1,0 +1,338 @@
+
+/**
+ * @section Base
+ */
+html[lang] {
+  box-sizing: border-box;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  position: relative;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+[hidden] {
+  display: none;
+}
+
+body {
+  display: flex;
+  flex-flow: column wrap;
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: optimizeSpeed;
+  margin: 0;
+  min-height: 100vh;
+}
+
+main {
+  margin: 0 auto;
+}
+
+footer {
+  background: whiteSmoke;
+  margin-top: auto;
+  padding: 1rem;
+  text-align: right;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: rebeccaPurple;
+}
+
+/**
+ * @section Generic styles
+ */
+header {
+ background: whiteSmoke;
+ max-height: 3.25em;
+}
+
+header li + li {
+  margin-left: 1em;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 60em;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+}
+
+.no-ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+/*
+	Improved screen reader only CSS class
+	@author Gaël Poupard
+	@note Based on Yahoo!'s technique
+	@author Thierry Koblentz
+	@see https://developer.yahoo.com/blogs/ydn/clip-hidden-content-better-accessibility-53456.html
+	* 1.
+		@note `clip` is deprecated but works everywhere
+		@see https://developer.mozilla.org/en-US/docs/Web/CSS/clip
+	* 2.
+		@note `clip-path` is the future-proof version, but not very well supported yet
+		@see https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
+		@see http://caniuse.com/#search=clip-path
+		@author Yvain Liechti
+		@see https://twitter.com/ryuran78/status/778943389819604992
+	* 3.
+		@note preventing text to be condensed
+		author J. Renée Beach
+		@see https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+		@note Drupal 8 goes with word-wrap: normal instead
+		@see https://www.drupal.org/node/2045151
+		@see http://cgit.drupalcode.org/drupal/commit/?id=5b847ea
+	* 4.
+		@note !important is important
+		@note Obviously you wanna hide something
+		@author Harry Roberts
+		@see http://csswizardry.com/2016/05/the-importance-of-important/
+*/
+
+.sr-only {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+	-webkit-clip-path: inset(50%) !important;
+					clip-path: inset(50%) !important;  /* 2 */
+	height: 1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;            /* 3 */
+}
+
+/*
+	Use in conjunction with .sr-only to only display content when it's focused.
+	@note Useful for skip links
+	@see http://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+	@note Based on a HTML5 Boilerplate technique, included in Bootstrap
+*/
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+	clip: auto !important;
+	-webkit-clip-path: none !important;
+					clip-path: none !important;
+	height: auto !important;
+	overflow: visible !important;
+	width: auto !important;
+	white-space: normal !important;
+}
+
+
+/**
+ * @section Mega navbar ===============
+ *
+ * @note min-height is meant to make nav full height
+ * 1. 6.25rem equals to navbar's min-height
+ * 2. Initial hidden status
+ * 3. Rendering optimization
+ * 4. When JS opens nav
+ * 5. When JS didn't work
+ ** forwards means that animation maintains its final state
+ ** second 300ms value is a delay: since JS can take that long to remove .no-js on <html>, we prevent animation to run before this
+ */
+[id="nav"] {
+  background: whiteSmoke;
+  min-height: calc(100vh - 6.25rem);   /* 1 */
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translate3d(-100%, 0, 0); /* 2 */
+  transition:
+    transform 300ms ease-in 50ms,
+    visibility 0s linear 300ms;        /* 2 */
+  visibility: hidden;                  /* 2 */
+  width: 18.75rem;
+  will-change: transform, visibility;  /* 3 */
+
+  /* 4 */
+  &.is-opened {
+    transform: none;
+    transition-delay: 0ms;
+    visibility: visible;
+  }
+
+  /* 5 */
+  .no-js & {
+    animation: 300ms ease-in 300ms forwards no-js;
+  }
+}
+
+/* 5
+ * @link https://developer.mozilla.org/fr/docs/Web/CSS/animation
+ */
+@keyframes no-js {
+  to {
+    transform: none;
+    transition-delay: 50ms, 0ms;
+    visibility: visible;
+  }
+}
+
+ /* @subsection Top level -------------------- */
+.navbar-mega {
+  font-size: 1.25rem;
+  position: relative;
+  transition: transform 300ms ease-in-out 50ms;
+  width: 100%;
+  will-change: transform;
+
+  & * {
+    font-size: 1rem;
+  }
+}
+
+.navbar-mega li + li {
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  margin: 0;
+}
+
+.navbar-mega a {
+  display: block;
+  padding: .5em .75em;
+  text-align: left;
+}
+
+.navbar-mega [aria-expanded] > [aria-hidden] {
+  float: right;
+  transition: transform 150ms ease-in;
+}
+
+.navbar-mega [data-toggle][aria-expanded="true"] > [aria-hidden] {
+  transform: rotate(180deg);
+}
+
+.has-subnav .js-close-subnav > [aria-hidden] {
+  float: left;
+  margin-right: .5em;
+}
+
+.navbar-mega [aria-expanded="true"],
+.navbar-mega [aria-expanded="true"] + * {
+  background: #fff;
+}
+
+/**
+ * @subsection Menu position --------------------
+ *
+ * @note Generating translations for 10 levels max.
+ * @note Simply customize the 10 to adjust it
+ */
+@for $i from 1 through 10 {
+  #nav[data-level="#{$i}"] .navbar-mega {
+    $i: $i - 1;
+    /* Let the magic happen! */
+    transform: translate3d($i * -100%, 0, 0);
+  }
+}
+
+ /* @subsection Sub levels --------------------
+  *
+  * @note It's important to toggle visibility for a11y:
+  * @note Focusables things in hidden menus shouldn't receive focus
+  * @note Transition is meant to delay hiding subnav (avoids flickering)
+  */
+.fresh-menu {
+  max-height: 80vh;
+  overflow: hidden;
+  transition:
+    visibility 0s ease 0s,
+    max-height 300ms ease 0s;
+  visibility: visible;
+
+  &[aria-hidden="true"] {
+    max-height: 0;
+    transition-delay: 300ms, 0s;
+    transition-duration: 0s, 150ms;
+    visibility: hidden;
+  }
+}
+
+.fresh-menu ul {
+  left: 100%;
+  position: absolute;
+  top: 0;
+  transition: visibility 0s linear 300ms;
+  visibility: hidden;
+  width: 100%;
+  will-change: visibility;
+
+  &:not([aria-hidden]) {
+   transition-delay: 0ms;
+   visibility: visible;
+  }
+
+  .no-js & {
+    padding-left: 1em;
+    position: static;
+  }
+}
+
+.fresh-menu a {
+  padding-left: 1.25em;
+}
+
+.has-subnav a {
+  padding-left: 1.5em;
+}
+
+.fresh-menu .js-close-subnav {
+  font-weight: bold;
+  padding-left: 0;
+}
+
+/**
+ * @subsection Hamburger button --------------------
+ *
+ */
+.btn-hamburger {
+  background: transparent;
+  border: 0;
+  color: blue;
+  cursor: pointer;
+  font-size: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+  overflow: hidden;
+  padding: 0;
+  transition: color 300ms ease-in;
+  width: 1.5rem;
+
+  &:hover,
+  &:focus {
+    border: 0;
+    color: rebeccaPurple;
+    outline: none;
+  }
+}
+
+.hamburger {
+  fill: currentColor;
+  height: 1em;
+  margin-top: -1px;
+  overflow: hidden;
+  transform: translateX(-1em);
+  transition: transform 150ms ease-in;
+  width: 2em;
+
+  [aria-expanded="true"] & {
+    transform: translateX(0);
+  }
+}

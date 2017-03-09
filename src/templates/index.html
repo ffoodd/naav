@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>naav</title>
+        <script>
+          document.documentElement.classList.remove('no-js');
+          document.documentElement.classList.add('js');
+        </script>
+        <link rel="stylesheet" href="dist/css/styles.min.css">
+    </head>
+
+    <body>
+        {% block skiplinks %}
+        <div class="container" id="top">
+          <a href="#main" class="sr-only sr-only-focusable">Aller au contenu</a>
+          <a href="#nav" class="sr-only sr-only-focusable">Aller à la navigation</a>
+        </div>
+        {% endblock %}
+
+        <svg xmlns="http://www.w3.org/2000/svg" hidden="hidden">
+          <symbol id="hamburger" viewBox="0 0 96 48">
+            <path d="M0 24.016C8.4 15.52 14.855 9.096 23.952 0c2.205 2.22 4.45 4.41 6.608 6.67-4.384 4.48-7.778 7.843-12.548 12.613H96.01l-.014 4.646.04 4.755h-78.15L30.59 41.39c-2.21 2.206-4.405 4.43-6.637 6.61C15.583 39.516 8.773 33.14 0 24.016z"/>
+            <rect width="48" height="9.301" x="48" y="38.699" ry="0"/>
+            <rect width="48" height="9.301" x="48" ry="0"/>
+          </symbol>
+        </svg>
+
+        {% set menus = ['Démonstration','Dépôt','Issues','Wiki'] %}
+        <header role="banner">
+            <div class="container row">
+                <ul class="row no-ul anchors">
+                    {% for menu in menus %}
+                    <li>
+                        {% include 'includes/_nav-anchors.html' %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <nav id="nav" role="navigation" aria-label="Navigation principale" data-level="1">
+                <ul class="navbar-mega no-ul">
+                    {% for menu in menus %}
+                    <li>
+                        {% include 'includes/_nav.html' %}
+                        {% include 'includes/_megamenu.html' %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
+
+        <main role="main" id="main" tabindex="-1">
+            <div class="container">
+
+            </div>
+        </main>
+
+        {% include 'includes/_footer.html' %}
+
+        <script src="dist/js/jquery.min.js"></script>
+        <script src="dist/js/naav.min.js"></script>
+    </body>
+</html>

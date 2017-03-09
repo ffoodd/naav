@@ -1,0 +1,23 @@
+{
+    "name": "naav",
+    "description": "Accessible multi-level push menu",
+    "repository": {
+        "url": "https://github.com/ffoodd/naav",
+        "license": "MIT"
+    },
+    "participate": {
+        "home": "http://ffoodd.github.io/naav/"
+    },
+    "bugs": {
+        "list": "https://github.com/ffoodd/naav/issues",
+        "report": "https://github.com/ffoodd/naav/issues/new"
+    },
+    "keywords": [
+        "a11y",
+        "css",
+        "sass",
+        "navigation",
+        "accessibility",
+        "html"
+    ]
+}
