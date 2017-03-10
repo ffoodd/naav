@@ -114,13 +114,15 @@ $(document).ready(function() {
   $close = $('.js-close-subnav'),
   $last = $('.last-item');
 
-  var levelUp = function($target, $current, $level, $grandpa) {
+  var levelUp = function($target, $current, $level, $grandpa, $origin) {
     // Gets targets opened, removing its parent thinggy classes
     $('[aria-controls="' + $target + '"]').attr('aria-expanded', 'false');
     // Close the current subnav
     $current.attr('aria-hidden', 'true');
     // set current level to nav data attribute
     $nav.attr('data-level', $level - 1);
+    // Handle focus
+    $origin.find('[aria-controls="' + $target + '"]').first().focus();
     // If we get back to a subnav
     if ($grandpa.length) {
       // Gets related buttons to say it's open!
@@ -146,10 +148,10 @@ $(document).ready(function() {
       $target.removeAttr('aria-hidden');
       $('[aria-controls="' + $controls + '"]').attr('aria-expanded', 'true');
       // And when $target is visible (when transition ends)
-      $nav.on('transitionend', ".naav", function(e) {
+      setTimeout(function(){
         // Its first link gets focused
         $target.find('.js-close-subnav').first().focus();
-      });
+      }, 300);
       // set current level to nav data attribute
       $nav.attr('data-level', $level);
     });
@@ -169,15 +171,10 @@ $(document).ready(function() {
     $origin  = $this.parents('.suub-naav').first(),
     $level   = $('#' + $target).data('level');
 
-    $this.on('click', function() {
+    $this.on('click', function(e) {
+      e.preventDefault();
       // Close current, open parent
-      levelUp($target, $current, $level, $grandpa);
-      // Handle focus
-      if ($grandpa.length) {
-        $grandpa.find('.js-close-subnav').first().focus();
-      } else {
-        $origin.find('[aria-controls="' + $target + '"]').first().focus();
-      }
+      levelUp($target, $current, $level, $grandpa, $origin);
     });
 
     $this.on('keydown', function(e) {
