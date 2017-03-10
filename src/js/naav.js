@@ -148,10 +148,11 @@ $(document).ready(function() {
       $target.removeAttr('aria-hidden');
       $('[aria-controls="' + $controls + '"]').attr('aria-expanded', 'true');
       // And when $target is visible (when transition ends)
-      setTimeout(function(){
+      // @link http://stackoverflow.com/questions/10979865/using-jquery-off-on-or-just-on
+      $nav.off('transitionend', ".naav").on('transitionend', ".naav", function(e) {
         // Its first link gets focused
         $target.find('.js-close-subnav').first().focus();
-      }, 300);
+      });
       // set current level to nav data attribute
       $nav.attr('data-level', $level);
     });
