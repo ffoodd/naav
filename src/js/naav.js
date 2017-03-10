@@ -45,12 +45,12 @@ $(document).ready(function() {
    });
 
   /**
-   * @section Navbar-mega
+   * @section naav
    *
    * @author Dany Ropital & Gaël Poupard
    * @note POC for orange.com website
    */
-  var $menus = $('.fresh-menu'),
+  var $menus = $('.suub-naav'),
   $subs = $menus.find('ul'),
   $nav  = $('#nav');
 
@@ -61,7 +61,7 @@ $(document).ready(function() {
     $index = $this.parents('li').first().index(),
     $link  = $this.prev('a'),
     $title = $link.text(),
-    $col   = $this.parents('ul.fresh-menu').data('menu'),
+    $col   = $this.parents('ul.suub-naav').data('menu'),
     $id    = 'subnav-' + $col + '-' + $index + '-' + $level,
     $href  = $this.parents('ul').attr('id'),
     $last  = $this.find('li').last().find('a');
@@ -146,7 +146,7 @@ $(document).ready(function() {
       $target.removeAttr('aria-hidden');
       $('[aria-controls="' + $controls + '"]').attr('aria-expanded', 'true');
       // And when $target is visible (when transition ends)
-      $nav.on('transitionend', ".navbar-mega", function(e) {
+      $nav.on('transitionend', ".naav", function(e) {
         // Its first link gets focused
         $target.find('.js-close-subnav').first().focus();
       });
@@ -156,7 +156,7 @@ $(document).ready(function() {
   });
 
   // Needs to prevent the transitionend event bubbling
-  $('a, .fresh-menu').on('transitionend', function(e) {
+  $('a, .suub-naav').on('transitionend', function(e) {
     e.stopPropagation();
   });
 
@@ -166,7 +166,7 @@ $(document).ready(function() {
     $target  = $this.attr('aria-controls'),
     $current = $this.parents('.has-subnav').first(),
     $grandpa = $('#' + $target).parents('.has-subnav').first(),
-    $origin  = $this.parents('.fresh-menu').first(),
+    $origin  = $this.parents('.suub-naav').first(),
     $level   = $('#' + $target).data('level');
 
     $this.on('click', function() {

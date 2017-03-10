@@ -187,7 +187,7 @@ header li + li {
 }
 
  /* @subsection Top level -------------------- */
-.navbar-mega {
+.naav {
   font-size: 1.25rem;
   position: relative;
   transition: transform 300ms ease-in-out 50ms;
@@ -199,23 +199,23 @@ header li + li {
   }
 }
 
-.navbar-mega li + li {
+.naav li + li {
   border-top: 1px solid rgba(0, 0, 0, .1);
   margin: 0;
 }
 
-.navbar-mega a {
+.naav a {
   display: block;
   padding: .5em .75em;
   text-align: left;
 }
 
-.navbar-mega [aria-expanded] > [aria-hidden] {
+.naav [aria-expanded] > [aria-hidden] {
   float: right;
   transition: transform 150ms ease-in;
 }
 
-.navbar-mega [data-toggle][aria-expanded="true"] > [aria-hidden] {
+.naav [data-toggle][aria-expanded="true"] > [aria-hidden] {
   transform: rotate(180deg);
 }
 
@@ -224,8 +224,8 @@ header li + li {
   margin-right: .5em;
 }
 
-.navbar-mega [aria-expanded="true"],
-.navbar-mega [aria-expanded="true"] + * {
+.naav [aria-expanded="true"],
+.naav [aria-expanded="true"] + * {
   background: #fff;
 }
 
@@ -236,7 +236,7 @@ header li + li {
  * @note Simply customize the 10 to adjust it
  */
 @for $i from 1 through 10 {
-  #nav[data-level="#{$i}"] .navbar-mega {
+  #nav[data-level="#{$i}"] .naav {
     $i: $i - 1;
     /* Let the magic happen! */
     transform: translate3d($i * -100%, 0, 0);
@@ -249,7 +249,7 @@ header li + li {
   * @note Focusables things in hidden menus shouldn't receive focus
   * @note Transition is meant to delay hiding subnav (avoids flickering)
   */
-.fresh-menu {
+.suub-naav {
   max-height: 80vh;
   overflow: hidden;
   transition:
@@ -265,7 +265,7 @@ header li + li {
   }
 }
 
-.fresh-menu ul {
+.suub-naav ul {
   left: 100%;
   position: absolute;
   top: 0;
@@ -285,7 +285,7 @@ header li + li {
   }
 }
 
-.fresh-menu a {
+.suub-naav a {
   padding-left: 1.25em;
 }
 
@@ -293,7 +293,7 @@ header li + li {
   padding-left: 1.5em;
 }
 
-.fresh-menu .js-close-subnav {
+.suub-naav .js-close-subnav {
   font-weight: bold;
   padding-left: 0;
 }
